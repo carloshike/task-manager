@@ -43,7 +43,9 @@ export class TaskComponent implements OnInit {
             return this.validateAllFormFields(this.taskForm);
         }
 
-        this.taskClosebutton.nativeElement.click();
+        if (this.taskClosebutton)
+            this.taskClosebutton.nativeElement.click();
+            
         this.spinner.show();
 
         if (this.taskForm.controls.id.value) {

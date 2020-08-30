@@ -57,7 +57,9 @@ export class ListComponent implements OnInit, OnChanges {
             return this.validateAllFormFields(this.listForm);
         }
 
-        this.listClosebutton.nativeElement.click();
+        if (this.listClosebutton)
+            this.listClosebutton.nativeElement.click();
+            
         this.spinner.show();
 
         if (this.listForm.controls.id.value) {
