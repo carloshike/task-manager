@@ -1,5 +1,5 @@
 import { AppPage } from './app.po';
-import { browser, logging } from 'protractor';
+import { browser, logging, protractor } from 'protractor';
 
 describe('Gerenciado de tarefas', () => {
   let page: AppPage;
@@ -10,7 +10,7 @@ describe('Gerenciado de tarefas', () => {
 
   it('Deve mostrar o título da aplicação', () => {
     page.navigateTo();
-    expect(page.getTitleText()).toEqual('Gerenciador de Tarefas');
+    expect(page.getTitleText()).toEqual("Gerenciador de Tarefas");
   });
 
   afterEach(async () => {
