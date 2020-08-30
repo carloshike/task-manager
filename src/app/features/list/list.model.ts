@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Adapter } from './adapter';
-import { Task, TaskAdapter } from './task.model';
-import { Status, StatusAdapter } from './status.model';
+import { Adapter } from '../../adapter/adapter';
+import { Task, TaskAdapter } from '../task/task.model';
+import { Status, StatusAdapter } from '../status/status.model';
 
 export class List {
     constructor(
@@ -29,7 +29,7 @@ export class ListAdapter implements Adapter<List> {
         item.id,
         item.name,
         item.description,
-        item.tasks ? item.tasks.sort().reverse().map(task => this.taskAdapter.adapt(task, item.status)) : [],
+        item.tasks ? item.tasks.sort((a, b) => b.createDate.localeCompare(a.createDate)).filter(task => task.active).map(task => this.taskAdapter.adapt(task, item.status)) : [],
         item.status ? item.status.map(status => this.statusAdapter.adapt(status)) : []
       );
     }

@@ -1,0 +1,101 @@
+<div class="modal fade" id="taskModal{{list.id}}" tabindex="-1" aria-labelledby="taskModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Tarefa</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="taskForm" >
+                    <div class="form-group" hidden>
+                        <input type="text" class="form-control" formControlName="id">
+                    </div>
+                    <div class="form-group" required>
+                        <label for="recipient-name" class="col-form-label">Nome:</label>
+                        <input type="text" class="form-control" formControlName="name">
+                        <div class="error-form" *ngIf="submited && this.taskForm.controls.name.errors && this.taskForm.controls.name.errors.required">
+                            Nome é obrigatório.
+                        </div>
+                        <div class="error-form" *ngIf="this.taskForm.controls.name.errors && this.taskForm.controls.name.errors.maxlength">
+                            O número máximo de caracteres é 255.
+                        </div>
+                    </div>
+                    <div class="form-group" required>
+                        <label for="message-text" class="col-form-label">Descrição:</label>
+                        <textarea class="form-control" formControlName="description"></textarea>
+                        <div class="error-form" *ngIf="submited && this.taskForm.controls.description.errors && this.taskForm.controls.description.errors.required">
+                            Descrição é obrigatória.
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" #taskClosebutton class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                <button type="submit" class="btn btn-primary" (click)="createUpdateTask()">{{this.taskForm.controls.id.value ? 'Editar tarefa' : 'Criar tarefa'}}</button>
+            </div>
+        </div>
+      </div>
+</div>
+
+<div>
+    <button type="button" class="btn btn-primary btn-space-all" data-toggle="modal" [attr.data-target]="'#taskModal' + list.id">
+        Criar nova Tarefa
+    </button>
+</div>
+
+<div class="modal fade" id="confirmTaskModal{{list.id}}" tabindex="-1" aria-labelledby="confirmTaskModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="confirmTaskModalLabel">Deletar</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+            <p>Deseja mesmo deletar a atividade {{taskToDelete ? taskToDelete.name : ""}}</p>
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Não</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="deleteTask()">Sim</button>
+        </div>
+    </div>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Descrição</th>
+            <th style="width:310px">Status</th>
+            <th style="width:110px">Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let task of list.tasks">
+            <td>{{task.name}}</td>
+            <td>{{task.description}}</td>
+            <td>
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" [ngClass]="{'btn-info': task.status && task.status.statusType == 'OPEN', 'btn-secondary': task.status && task.status.statusType != 'OPEN'}"
+                        class="btn"class="btn" (click)="updateTaskStatus('OPEN', task.id)">Aberta</button>
+                    <button type="button" [ngClass]="{'btn-warning': task.status && task.status.statusType == 'NEUTRAL', 'btn-secondary': task.status && task.status.statusType != 'NEUTRAL'}"
+                        class="btn" class="btn" (click)="updateTaskStatus('NEUTRAL', task.id)">Executando</button>
+                    <button type="button" [ngClass]="{'btn-success': task.status && task.status.statusType == 'CLOSED', 'btn-secondary': task.status && task.status.statusType != 'CLOSED'}"
+                        class="btn" (click)="updateTaskStatus('CLOSED', task.id)">Finalizada</button>
+                  </div>
+            </td>
+            <td>
+                <button type="button" class="btn btn-secondary btn-space-left" (click)="editTask(task)"  data-toggle="modal" [attr.data-target]="'#taskModal' + list.id">
+                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                </button>
+                <button type="button" class="btn btn-secondary btn-space-left" (click)="markToDeleteTask(task)" data-toggle="modal" [attr.data-target]="'#confirmTaskModal' + list.id">
+                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>

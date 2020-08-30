@@ -6,23 +6,33 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms'
 
-import { PermissionService } from './services/permission.service';
-import { ListService } from './services/list.service';
+import { PermissionService } from './features/permission/permission.service';
+import { ListService } from './features/list/list.service';
+import { ListComponent } from './features/list/list.component';
+import { TaskService } from './features/task/task.service';
+import { TaskComponent } from './features/task/task.component';
+import { NgxSpinnerModule } from "ngx-spinner";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ListComponent,
+    TaskComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxSpinnerModule,
+    BrowserAnimationsModule
   ],
   providers: [
     PermissionService,
-    ListService
+    ListService,
+    TaskService
   ],
   bootstrap: [AppComponent]
 })

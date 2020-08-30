@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { List, ListAdapter } from '../models/list.model';
+import { List, ListAdapter } from './list.model';
 import { map } from 'rxjs/operators';
 
 @Injectable()
@@ -32,7 +32,7 @@ export class ListService {
             "tenantId": this.tenantId
         }
         
-        return this.http.post<any>(this.API_URL, params, { headers });
+        return this.http.post<any>(`${this.API_URL}?expand=status`, params, { headers });
     }
 
     public updateList(token: string, id: string, name: string, description: string) {
@@ -42,7 +42,9 @@ export class ListService {
             "name": name,
         }
         
-        return this.http.put<any>(`${this.API_URL}/${id}`, params, { headers });
+        return this.http.put<any>(`${this.API_URL}/${id}?expand=tasks&expand=status`, params, { headers }).pipe(
+            map((data: any) =>  this.listAdapter.adapt(data))
+        );
     }
 
     public deleteList(token: string, id: string) {

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Adapter } from './adapter';
-import { Status, StatusAdapter } from './status.model';
+import { Adapter } from '../../adapter/adapter';
+import { Status, StatusAdapter } from '../status/status.model';
 
 export class Task {
     constructor(
@@ -9,6 +9,7 @@ export class Task {
         public description: string,
         public statusId: string,
         public status: Status,
+        public createDate: Date
     ) { }
 }
 
@@ -28,7 +29,8 @@ export class TaskAdapter implements Adapter<Task> {
         item.name,
         item.description,
         item.statusId,
-        statusList ? statusList.find(s => s.id === item.statusId) : null
+        statusList ? statusList.find(s => s.id === item.statusId) : null,
+        item.createDate
       );
     }
   }

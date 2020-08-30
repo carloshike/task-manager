@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Adapter } from './adapter';
+import { Adapter } from '../../adapter/adapter';
 
 export class Status {
     constructor(
         public id: string,
         public name: string,
         public color: string,
+        public statusType: string
     ) { }
 }
 
@@ -19,7 +20,8 @@ export class StatusAdapter implements Adapter<Status> {
       return new Status(
         item.id,
         item.name,
-        item.color
+        item.color,
+        item.statusType
       );
     }
   }

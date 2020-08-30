@@ -1,73 +1,13 @@
 <div>
-    <div id="#appInfo">
+    <div id="#appInfo" class="text-center">
         <h1>Gerenciador de Tarefas</h1>
-        <h2>Este aplicatiblo bablabla</h2>
     </div>
 
     <div id="#appBody">
-
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#listModal">
-            Criar nova lista
-        </button>
-        
-        <div class="modal fade" id="listModal" tabindex="-1" aria-labelledby="listModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Lista</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form [formGroup]="listForm" >
-                            <div class="form-group" hidden>
-                                <input type="text" class="form-control" formControlName="id">
-                            </div>
-                            <div class="form-group" required>
-                                <label for="recipient-name" class="col-form-label">Nome:</label>
-                                <input type="text" class="form-control" formControlName="name" [ngClass]="{ 'is-invalid': submited && this.listForm.controls.name.errors && this.listForm.controls.name.errors.required }">
-                            </div>
-                            <div class="form-group" required>
-                                <label for="message-text" class="col-form-label">Descrição:</label>
-                                <textarea class="form-control" formControlName="description" [ngClass]="{ 'is-invalid': submited && this.listForm.controls.description.errors && this.listForm.controls.description.errors.required }"></textarea>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" #listClosebutton class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                        <button type="submit" class="btn btn-primary" (click)="createUpdateList()">{{this.listForm.controls.id.value ? 'Editar lista' : 'Criar lista'}}</button>
-                    </div>
-                </div>
-              </div>
-        </div>
-
-
-        <div *ngFor="let list of lists">
-            <div>
-                <h4>{{list.name}}</h4>
-                <button type="button" class="btn btn-secondary" (click)="editList(list)"  data-toggle="modal" data-target="#listModal">Editar</button>
-                <button type="button" class="btn btn-secondary" (click)="deleteList(list)">Deletar</button>
-            </div>
-            <p>{{list.description}}</p>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>Descrição</th>
-                        <th>Status</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let task of list.tasks">
-                        <td>{{task.name}}</td>
-                        <td>{{task.description}}</td>
-                        <td>{{task.status.name}}</td>
-                        <td>/--/</td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="container">
+            <list [token]="token"></list>
         </div>
     </div>
 </div>
+
+<ngx-spinner></ngx-spinner>
